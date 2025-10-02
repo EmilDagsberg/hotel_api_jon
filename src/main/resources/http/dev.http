@@ -1,12 +1,18 @@
 // Hotel API
 
+   ### Get hotels and rooms
+
 GET {{url}}/hotels
 
 ###
 
+   ### Get Hotel by id and its rooms
+
 GET {{url}}/hotels/2
 
 ###
+
+   ### Create hotel
 
 POST {{url}}/hotels
 Content-Type: application/json
@@ -19,7 +25,9 @@ Content-Type: application/json
 
 ###
 
-PUT {{url}}/hotels/3
+   ### Updated hotel (choose hotel to updated by id)
+
+PUT {{url}}/hotels/1
 Content-Type: application/json
 
 {
@@ -30,21 +38,28 @@ Content-Type: application/json
 
 ###
 
-DELETE {{url}}/hotels/5
+   ### Delete hotel and its rooms
+
+DELETE {{url}}/hotels/1
 
 ###
 
 // Room API
 
+   ### Get all rooms
+
 GET {{url}}/rooms
 
 ###
 
-GET {{url}}/rooms/1
+    ### Geet room by roomíd
+GET {{url}}/rooms/2
 
 ###
 
-POST {{url}}/rooms/hotel/3
+    ### Create room and at to hotel (number is hotelid)
+
+POST {{url}}/rooms/hotel/1
 Content-Type: application/json
 
 {

@@ -23,7 +23,7 @@
         <issuer>cphbusiness.dat</issuer>
         <token.expiration.time>3600000</token.expiration.time>
         <!--  DB    -->
-        <db.name>startcode</db.name>
+        <db.name>hotel</db.name>
         <db.username>postgres</db.username>
         <db.password>postgres</db.password>
         <db.connection.string>jdbc:postgresql://localhost:5432/</db.connection.string>
@@ -31,6 +31,19 @@
         <javalin.port>7070</javalin.port>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+
+        <!-- SLF4J API -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.16</version>
+        </dependency>
 
         <!--   R.E.S.T     -->
 
