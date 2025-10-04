@@ -1,6 +1,7 @@
 package dat.routes;
 
 import dat.controllers.impl.HotelController;
+import dat.security.enums.Role;
 import io.javalin.apibuilder.EndpointGroup;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -13,7 +14,7 @@ public class HotelRoute {
 
         return () -> {
             post("/", hotelController::create);
-            get("/", hotelController::readAll);
+            get("/", hotelController::readAll, Role.ADMIN);
             get("/{id}", hotelController::read);
             put("/{id}", hotelController::update);
             delete("/{id}", hotelController::delete);

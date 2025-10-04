@@ -2,6 +2,9 @@ package dat.config;
 
 import dat.entities.Hotel;
 import dat.entities.Room;
+import dat.security.entities.Role;
+import dat.security.entities.User;
+import dat.utils.Utils;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -14,26 +17,30 @@ public class HibernateConfig {
 
     private static EntityManagerFactory emf;
     private static EntityManagerFactory emfTest;
-    private static Boolean isTest = false;
+    private static boolean isTest = false;
 
-    public static void setTest(Boolean test) {
-        isTest = test;
-    }
-
-    public static Boolean getTest() {
+    public static boolean getIsTest() {
         return isTest;
     }
 
+    public static void setIsTest(boolean _isTest) {
+        isTest = _isTest;
+    }
+
     public static EntityManagerFactory getEntityManagerFactory(String DBName) {
-        if (emf == null)
-            emf = createEMF(getTest(), DBName);
+        if (emf == null){
+            if (isTest) {
+                emf = getEntityManagerFactoryForTest();
+            } else
+                emf = createEMF(false, DBName);
+        }
         return emf;
     }
 
     public static EntityManagerFactory getEntityManagerFactoryForTest() {
-        if (emfTest == null){
-            setTest(true);
-            emfTest = createEMF(getTest(), "");  // No DB needed for test
+        if (emfTest == null) {
+            setIsTest(true);
+            emfTest = createEMF(isTest, "");  // No DB needed for test
         }
         return emfTest;
     }
@@ -42,6 +49,8 @@ public class HibernateConfig {
     private static void getAnnotationConfiguration(Configuration configuration) {
         configuration.addAnnotatedClass(Hotel.class);
         configuration.addAnnotatedClass(Room.class);
+        configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(Role.class);
     }
 
     private static EntityManagerFactory createEMF(boolean forTest, String DBName) {
@@ -78,7 +87,7 @@ public class HibernateConfig {
         props.put("hibernate.connection.driver_class", "org.postgresql.Driver");
         props.put("hibernate.hbm2ddl.auto", "create");
         props.put("hibernate.current_session_context_class", "thread");
-        props.put("hibernate.show_sql", "true");
+        props.put("hibernate.show_sql", "false");
         props.put("hibernate.format_sql", "true");
         props.put("hibernate.use_sql_comments", "true");
         return props;
@@ -99,7 +108,7 @@ public class HibernateConfig {
     }
 
     private static Properties setTestProperties(Properties props) {
-        //props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        //        props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         props.put("hibernate.connection.driver_class", "org.testcontainers.jdbc.ContainerDatabaseDriver");
         props.put("hibernate.connection.url", "jdbc:tc:postgresql:15.3-alpine3.18:///test_db");
         props.put("hibernate.connection.username", "postgres");

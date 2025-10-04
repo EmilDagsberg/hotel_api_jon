@@ -8,7 +8,7 @@ GET {{url}}/hotels
 
    ### Get Hotel by id and its rooms
 
-GET {{url}}/hotels/2
+GET {{url}}/hotels/1
 
 ###
 

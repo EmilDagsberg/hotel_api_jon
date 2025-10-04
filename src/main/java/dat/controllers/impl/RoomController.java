@@ -19,7 +19,7 @@ public class RoomController implements IController<RoomDTO, Integer> {
     private RoomDAO dao;
 
     public RoomController() {
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory("hotel");
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory("hotelAPI");
         this.dao = RoomDAO.getInstance(emf);
     }
 
